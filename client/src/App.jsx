@@ -8,7 +8,7 @@ import OfficerDashboard from '../pages/OfficerDashboard';
 import AdminPanel from '../pages/AdminPanel';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
-
+import ProtectedRoute from '../components/ProtectedRoute'
 
 const App = () => {
   return (
@@ -19,11 +19,23 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* User Route */}
-        <Route path="/user-dashboard" element={<UserDashboard />} />
+        <Route
+          path="/user-dashboard"
+          element={
+            <ProtectedRoute allowedRole="user">
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Officer Route */}
-        <Route path="/officer-dashboard" element={<OfficerDashboard />} />
+        <Route
+          path="/officer-dashboard"
+          element={
+            <ProtectedRoute allowedRole="officer">
+              <OfficerDashboard />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Admin Route */}
         <Route path="/admin" element={<AdminPanel />} />
@@ -36,3 +48,5 @@ const App = () => {
 };
 
 export default App;
+
+
