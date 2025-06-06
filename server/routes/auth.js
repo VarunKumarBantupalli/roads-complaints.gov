@@ -40,7 +40,9 @@ router.post('/login', async (req, res) => {
     expiresIn: '1d'
   });
 
-  res.json({ token, role: user.role });
+  res.json({ token,
+  role: user.role,
+  district: user.role === 'officer' ? user.district : null,});
 });
 
 

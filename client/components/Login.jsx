@@ -20,6 +20,7 @@ const Login = () => {
       if (res.data.role === 'user') {
         navigate('/user-dashboard');
       } else {
+        localStorage.setItem('district', res.data.district);
         navigate('/officer-dashboard');
       }
     } catch (error) {

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import Complaint from '../pages/Complaint';
+
 
 const UserDashboard = () => {
     return (
@@ -7,6 +9,8 @@ const UserDashboard = () => {
             <button className="bg-red-500 text-white px-4 py-2 rounded">
                 <Link to="/logout">Logout</Link>
             </button>
+
+            <Complaint/>
 
             <div className="h-screen bg-yellow-500">
                 <h1 className='text-4xl font-bold'>This is the User page </h1>
