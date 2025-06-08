@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState(''); 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -14,17 +14,22 @@ const Login = () => {
     try {
       const res = await axios.post('/api/auth/login', { email, password });
 
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('role', res.data.role);
+      const user = res.data.user;
+      const token = res.data.token;
 
-      if (res.data.role === 'user') {
-        navigate('/user-dashboard');
-      } else {
-        localStorage.setItem('district', res.data.district);
+      // Store token and full user object in localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', res.data.role);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      // Redirect based on role
+      if (user.role === 'officer') {
         navigate('/officer-dashboard');
+      } else {
+        navigate('/user-dashboard');
       }
     } catch (error) {
-      console.log('Login error:', error);
+      console.error('Login error:', error);
       alert('Invalid credentials');
     }
   };

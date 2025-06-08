@@ -42,6 +42,13 @@ router.post('/login', async (req, res) => {
 
   res.json({ token,
   role: user.role,
+    user: {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    
+  },
   district: user.role === 'officer' ? user.district : null,});
 });
 

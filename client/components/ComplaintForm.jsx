@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+const user = JSON.parse(localStorage.getItem("user"));
 
 const ComplaintForm = () => {
   const [image, setImage] = useState(null);
@@ -15,11 +16,11 @@ const ComplaintForm = () => {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'user_uploads'); 
+    formData.append('upload_preset', 'user_uploads');
 
     try {
       const res = await axios.post(
-        'https://api.cloudinary.com/v1_1/varuncloudinarycloud/image/upload', 
+        'https://api.cloudinary.com/v1_1/varuncloudinarycloud/image/upload',
         formData
       );
       setImage(res.data.secure_url);
@@ -33,6 +34,12 @@ const ComplaintForm = () => {
 
     const token = localStorage.getItem('token');
 
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const userId = storedUser?._id;
+    
+
+
+
     try {
       await axios.post(
         'http://localhost:3000/api/complaints',
@@ -41,6 +48,7 @@ const ComplaintForm = () => {
           description,
           district,
           location,
+          userId
         },
         {
           headers: {

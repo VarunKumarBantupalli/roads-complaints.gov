@@ -5,20 +5,34 @@ const Complaint = require('../models/Complaint');
 const ComplaintResponse = require('../models/ComplaintResponse');     
 
 // POST /api/complaints
-router.post('/', (req, res) => {
-  const complaintData = req.body;
-  console.log('Received complaint data:', complaintData);
-  // Save to DB logic goes here
+router.post('/', async (req, res) => {
+   const complaintData = {
+      ...req.body,
+      
+    };
 
-  
-  res.status(201).json({ message: 'Complaint received', data: complaintData });
+  try {
+    console.log('Received complaint data:', complaintData);
+
+    // Create and save new complaint
+    const newComplaint = new Complaint(complaintData);
+    const savedComplaint = await newComplaint.save();
+
+    res.status(201).json({
+      message: 'Complaint received and saved successfully',
+      data: savedComplaint,
+    });
+
+  } catch (error) {
+    console.error('Error saving complaint:', error);
+    res.status(500).json({ error: 'Failed to save complaint' });
+  }
 });
-
 
 // POST /api/complaints
 router.post('/', verifyToken, async (req, res) => {
   const { image, location, description, district } = req.body;
-  const userId = req.userId;
+  const userId = req.body.userId;
 
   const newComplaint = new Complaint({ userId, image, location, description, district });
   await newComplaint.save();
