@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const complaintResponseSchema = new mongoose.Schema({
@@ -7,17 +6,25 @@ const complaintResponseSchema = new mongoose.Schema({
     ref: 'Complaint',
     required: true
   },
+  complaintImage: {
+    type: String,
+    required: true
+  },
+  complaintDescription: {
+    type: String,
+    required: true
+  },
   image: {
     type: String,
     required: true
   },
   description: {
-    type: String ,
+    type: String,
     required: true
   },
   officerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', 
+    ref: 'User',
     required: true
   },
   createdAt: {

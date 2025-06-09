@@ -4,6 +4,7 @@ const authRoutes = require('./routes/auth');
 const connectDb = require('./config/dbConnection');
 const uploadRoutes = require('./routes/upload');
 const complaintRoutes = require('./routes/complaints');
+const responseRoutes = require('./routes/responses');
 const cors = require("cors");
 const dotenv = require('dotenv').config();
 
@@ -19,6 +20,8 @@ app.use(cors({
 app.use('/api', uploadRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/complaints', complaintRoutes);
+app.use('/api/responses', responseRoutes);
+
 
 
 app.listen(port, () => {

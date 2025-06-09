@@ -4,38 +4,7 @@ const verifyToken = require('../middleware/authMiddleware');
 const Complaint = require('../models/complaint');
 const ComplaintResponse = require('../models/ComplaintResponse');
  
-// // POST /api/complaints
-// // This route is used to submit a new complaint
 
-// router.post('/', verifyToken, async (req, res) => {
-//   const { image, location, description, district } = req.body;
-//   const userId = req.body.userId;
-
-//   const newComplaint = new Complaint({ userId, image, location, description, district });
-//   await newComplaint.save();
-//   res.status(201).json({ message: 'Complaint submitted successfully' });
-// });
-
-// // POST /api/complaints
-// // that submitted complaint are handled and saved to the database 
-
-// router.post('/', async (req, res) => {
-//    const complaintData = {
-//       ...req.body,    
-//     };
-//   try { 
-//     const newComplaint = new Complaint(complaintData);
-//     const savedComplaint = await newComplaint.save();
-//     res.status(201).json({
-//       message: 'Complaint received and saved successfully',
-//       data: savedComplaint,
-//     });
-
-//   } catch (error) {
-//     console.error('Error saving complaint:', error);
-//     res.status(500).json({ error: 'Failed to save complaint' });
-//   }
-// });
 
 // // POST /api/complaints
 // // This route is used to submit and handle a new complaint
@@ -53,8 +22,6 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to save complaint' });
   }
 });
-
-
 
 // GET /api/complaints/district/:district
 router.get('/district/:district', async (req, res) => {
@@ -74,8 +41,6 @@ router.get('/district/:district', async (req, res) => {
   }
 });
 
-
-
 // GET /api/complaints
 // This route is used to get all complaints
 router.get('/', async (req, res) => {
@@ -87,5 +52,66 @@ router.get('/', async (req, res) => {
   }
 }
 );
+
+// GET /api/complaints/:id
+//This route is used to get a specific complaint that the officer wanting to respond 
+router.get('/:id', async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.params.id);
+    if (!complaint) return res.status(404).json({ message: 'Complaint not found' });
+    res.json(complaint);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });   
+  }
+});
+
+// POST /api/complaints/respond/:id
+// This route is used by officers to respond to a complaint
+router.post('/respond/:id', async (req, res) => {
+  const complaintId = req.params.id;
+  const { image, description } = req.body;
+ const officerId = "665ab1a11111111111111111";
+
+  try {
+    const complaint = await Complaint.findById(complaintId);
+
+    if (!complaint) {
+      return res.status(404).json({ message: 'Complaint not found' });
+    }
+
+    const newResponse = new ComplaintResponse({
+      complaintId,
+      complaintImage: complaint.image,
+      complaintDescription: complaint.description,
+      image,
+      description,
+      officerId,
+    });
+
+    await newResponse.save();
+
+    res.status(200).json({ message: 'Response submitted successfully' });
+  } catch (err) {
+    console.error('Error submitting response:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
+
+// POST /api/responses
+// router.post('/',  async (req, res) => {
+//   const { complaintId, image, description } = req.body;
+//   const officerId = req.userId;
+
+//   const newResponse = new ComplaintResponse({ complaintId, officerId, image, description });
+//   await newResponse.save();
+//   res.status(201).json({ message: 'Response submitted successfullyrerr' });
+// });
+
+
+
+
 
 module.exports = router;

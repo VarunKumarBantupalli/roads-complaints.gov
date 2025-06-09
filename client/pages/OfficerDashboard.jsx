@@ -10,7 +10,7 @@ const OfficerDashboard = () => {
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
-        console.log('Fetching complaints for district:', district); //only this line is working
+        
         const res = await axios.get(`http://localhost:3000/api/complaints/district/${district}`,
           {
             headers: {
