@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
 import ProtectedRoute from '../components/ProtectedRoute'
 import Logout from '../components/Logout';
+import ComplaintResponse from '../components/ComplaintResponse';
 
 // import AdminPanel from '../pages/AdminPanel';
 
@@ -40,9 +41,13 @@ const App = () => {
           element={
             <ProtectedRoute allowedRole="officer">
               <OfficerDashboard />
+              
+              
             </ProtectedRoute>
-          }
+          }   
         />
+        <Route path="/respond/:id" element={<ComplaintResponse />} />
+        
 
         {/* Catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />

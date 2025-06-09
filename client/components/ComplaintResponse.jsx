@@ -1,147 +1,61 @@
-// src/components/ComplaintResponse.jsx
-
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const ComplaintResponse = () => {
-  const [complaints, setComplaints] = useState([]);
-  const [responseMap, setResponseMap] = useState({});
-  const [loading, setLoading] = useState(true);
-
-  const token = localStorage.getItem('token');
-  const district = localStorage.getItem('district');
+  const { id } = useParams();
+  const [complaint, setComplaint] = useState(null);
+  const [responseText, setResponseText] = useState('');
 
   useEffect(() => {
-    const fetchComplaints = async () => {
+    const fetchComplaint = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3000/api/complaints/district/${district}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setComplaints(res.data);
+        const res = await axios.get(`http://localhost:3000/api/complaints/${id}`);
+        setComplaint(res.data);
       } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching complaint:', err);
       }
     };
 
-    fetchComplaints();
-  }, [district, token]);
+    fetchComplaint();
+  }, [id]);
 
-  const handleResponseSubmit = async (complaintId) => {
+  const handleResponseSubmit = async () => {
     try {
-      await axios.post(
-        'http://localhost:3000/api/responses',
-        {
-          complaintId,
-          description: responseMap[complaintId]?.description,
-          image: responseMap[complaintId]?.image,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      alert('Response submitted!');
+      await axios.post(`http://localhost:3000/api/complaints/respond/${id}`, {
+        response: responseText,
+        status: 'resolved',
+      });
+      alert('Response submitted successfully!');
     } catch (err) {
-      console.error(err);
+      console.error('Error submitting response:', err);
     }
   };
 
-  const handleImageUpload = async (e, complaintId) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'user_uploads'); // Replace with your Cloudinary upload preset
-
-    try {
-      const res = await axios.post(
-        'https://api.cloudinary.com/v1_1/varuncloudinarycloud/image/upload',
-        formData
-      );
-      setResponseMap((prev) => ({
-        ...prev,
-        [complaintId]: {
-          ...prev[complaintId],
-          image: res.data.secure_url,
-        },
-      }));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleInputChange = (e, complaintId) => {
-    const { value } = e.target;
-    setResponseMap((prev) => ({
-      ...prev,
-      [complaintId]: {
-        ...prev[complaintId],
-        description: value,
-      },
-    }));
-  };
+  if (!complaint) return <div>Loading...</div>;
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">District Complaints</h1>
+    <div className="p-4 max-w-xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">Complaint Details</h2>
+      <p><strong>Title:</strong> {complaint.title}</p>
+      <p><strong>Description:</strong> {complaint.description}</p>
 
-      {loading ? (
-        <p className="text-center">Loading complaints...</p>
-      ) : complaints.length === 0 ? (
-        <p className="text-center text-gray-600">No complaints found for your district.</p>
-      ) : (
-        <div className="grid gap-6">
-          {complaints.map((comp) => (
-            <div
-              key={comp._id}
-              className="bg-white p-6 rounded-xl shadow-md border border-gray-200"
-            >
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-800">Complaint Description</h2>
-                <p className="text-gray-700 mt-1">{comp.description}</p>
-              </div>
+      <textarea
+        className="w-full p-2 border rounded mt-4"
+        rows={4}
+        placeholder="Type your response here..."
+        value={responseText}
+        onChange={(e) => setResponseText(e.target.value)}
+      />
 
-              {comp.image && (
-                <img
-                  src={comp.image}
-                  alt="Complaint"
-                  className="w-full h-64 object-cover rounded-lg mb-4"
-                />
-              )}
-
-              <div className="space-y-3">
-                <input
-                  type="file"
-                  onChange={(e) => handleImageUpload(e, comp._id)}
-                  className="w-full border p-2 rounded"
-                />
-
-                <textarea
-                  placeholder="Type your response here..."
-                  className="w-full border p-3 rounded h-32"
-                  value={responseMap[comp._id]?.description || ''}
-                  onChange={(e) => handleInputChange(e, comp._id)}
-                />
-
-                <button
-                  onClick={() => handleResponseSubmit(comp._id)}
-                  className="bg-green-600 text-white py-2 px-6 rounded hover:bg-green-700"
-                >
-                  Submit Response
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      <button
+        className="mt-2 px-4 py-2 bg-green-600 text-white rounded"
+        onClick={handleResponseSubmit}
+      >
+        Submit Response
+      </button>
     </div>
   );
 };
 
 export default ComplaintResponse;
-

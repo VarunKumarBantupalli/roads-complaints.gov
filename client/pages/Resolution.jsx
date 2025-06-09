@@ -4,7 +4,7 @@ import ComplaintResponse from '../components/ComplaintResponse'
 const Resolution = () => {
   return (
     <div>
-      <ComplaintResponse/>
+      
     </div>
   )
 }

@@ -20,6 +20,7 @@ app.use('/api', uploadRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/complaints', complaintRoutes);
 
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });  
