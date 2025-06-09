@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const OfficerDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const navigate = useNavigate();
-  const district = localStorage.getItem('district')?.toLowerCase();
+  const district = localStorage.getItem('district');
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
@@ -50,7 +50,7 @@ const OfficerDashboard = () => {
       {complaints.map(complaint => (
 
         <div key={complaint._id} className="border p-4 mb-4 rounded shadow bg-amber-600">
-          <h4>from {complaint.userId}</h4>
+          <h4>From: {complaint.userId?.name || 'Anonymous'}</h4>
           <img
             src={complaint.image}
             alt="Complaint"

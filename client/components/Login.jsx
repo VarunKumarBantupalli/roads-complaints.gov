@@ -25,6 +25,7 @@ const Login = () => {
       // Redirect based on role
       if (user.role === 'officer') {
         navigate('/officer-dashboard');
+        localStorage.setItem('district' , res.data.district);
       } else {
         navigate('/user-dashboard');
       }

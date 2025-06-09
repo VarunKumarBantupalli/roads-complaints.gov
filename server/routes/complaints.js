@@ -3,7 +3,7 @@ const router = express.Router();
 const verifyToken = require('../middleware/authMiddleware');
 const Complaint = require('../models/complaint');
 const ComplaintResponse = require('../models/ComplaintResponse');
- 
+
 
 
 // // POST /api/complaints
@@ -28,7 +28,9 @@ router.get('/district/:district', async (req, res) => {
   try {
     const { district } = req.params;
 
-    const complaints = await Complaint.find({ district });
+    const complaints = await Complaint.find({
+      district: new RegExp(`^${district}$`, 'i'),
+    });
 
     if (!complaints || complaints.length === 0) {
       return res.status(404).json({ message: 'No complaints found for this district' });
@@ -61,7 +63,7 @@ router.get('/:id', async (req, res) => {
     if (!complaint) return res.status(404).json({ message: 'Complaint not found' });
     res.json(complaint);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });   
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -69,8 +71,7 @@ router.get('/:id', async (req, res) => {
 // This route is used by officers to respond to a complaint
 router.post('/respond/:id', async (req, res) => {
   const complaintId = req.params.id;
-  const { image, description } = req.body;
- const officerId = "665ab1a11111111111111111";
+  const { image, description, officerId } = req.body;
 
   try {
     const complaint = await Complaint.findById(complaintId);

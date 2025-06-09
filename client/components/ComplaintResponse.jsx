@@ -25,6 +25,8 @@ const ComplaintResponse = () => {
     fetchComplaint();
   }, [id]);
 
+
+
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -44,6 +46,9 @@ const ComplaintResponse = () => {
     }
   };
 
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+    const officerId = storedUser?._id;
+
   const handleResponseSubmit = async () => {
     if (!image || !description) {
       alert('Please upload an image and provide a description');
@@ -53,7 +58,8 @@ const ComplaintResponse = () => {
     try {
       await axios.post(`http://localhost:3000/api/complaints/respond/${id}`, {
         image,
-        description
+        description,
+        officerId
       }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}` // If using JWT auth
