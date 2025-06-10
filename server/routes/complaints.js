@@ -90,6 +90,7 @@ router.post('/respond/:id', async (req, res) => {
     });
 
     await newResponse.save();
+    await Complaint.findByIdAndDelete(complaintId);
 
     res.status(200).json({ message: 'Response submitted successfully' });
   } catch (err) {
