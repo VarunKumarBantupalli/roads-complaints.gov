@@ -11,11 +11,14 @@ const ComplaintForm = () => {
   const [district, setDistrict] = useState('');
   const [location, setLocation] = useState({ latitude: '', longitude: '' });
 
+  
+
+
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setImagePreview(URL.createObjectURL(file)); // Temporary preview
+    setImagePreview(URL.createObjectURL(file)); 
 
     const formData = new FormData();
     formData.append('file', file);
@@ -61,7 +64,8 @@ const ComplaintForm = () => {
 
     try {
       await axios.post(
-        'http://localhost:3000/api/complaints',
+       
+        `https://ridewise.onrender.com/api/complaints`,
         {
           image,
           description,
@@ -241,7 +245,7 @@ export default ComplaintForm;
 
 //     try {
 //       await axios.post(
-//         'http://localhost:3000/api/complaints',
+//         'VITE_API_BASE_URL/api/complaints',
 //         {
 //           image,
 //           description,

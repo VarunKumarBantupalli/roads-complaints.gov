@@ -5,10 +5,12 @@ const Home = () => {
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
+
   useEffect(() => {
     const fetchResponses = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/responses');
+        const res = await axios.get(`https://ridewise.onrender.com/api/responses`);
         setResponses(res.data);
       } catch (err) {
         console.error('Error fetching responses:', err);

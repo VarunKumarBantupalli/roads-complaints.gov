@@ -12,7 +12,7 @@ const ComplaintResponse = () => {
   useEffect(() => {
     const fetchComplaint = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/complaints/${id}`);
+        const res = await axios.get(`https://ridewise.onrender.com/api/complaints/${id}`);
         if (!res.data) {
           console.warn('No complaint found with this ID');
           return;
@@ -58,7 +58,7 @@ const ComplaintResponse = () => {
 
     try {
       await axios.post(
-        `http://localhost:3000/api/complaints/respond/${id}`,
+        `https://ridewise.onrender.com/api/complaints/respond/${id}`,
         {
           image,
           description,

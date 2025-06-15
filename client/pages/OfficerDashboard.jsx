@@ -7,11 +7,12 @@ const OfficerDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const navigate = useNavigate();
   const district = localStorage.getItem('district');
+
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
         
-        const res = await axios.get(`http://localhost:3000/api/complaints/district/${district}`,
+        const res = await axios.get(`https://ridewise.onrender.com/api/complaints/district/${district}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('token')}`,
