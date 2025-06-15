@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ComplaintResponse = require('../models/ComplaintResponse');
+const ComplaintResponse = require('../models/complaintResponse');
 
 // GET /api/responses
 router.get('/', async (req, res) => {
