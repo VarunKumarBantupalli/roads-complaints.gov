@@ -10,6 +10,8 @@ import NotFound from '../pages/NotFound';
 import ProtectedRoute from '../components/ProtectedRoute'
 import Logout from '../components/Logout';
 import ComplaintResponse from '../components/ComplaintResponse';
+import ScrollToTop from '../components/ScrollToTop';
+import Responses from '../components/Responses';
 
 // import AdminPanel from '../pages/AdminPanel';
 
@@ -19,12 +21,15 @@ import ComplaintResponse from '../components/ComplaintResponse';
 const App = () => {
   return (
     <Router>
+      <ScrollToTop/>
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/responses" element={<Responses />} />
+
          
         {/* Protected Routes */}
         <Route
