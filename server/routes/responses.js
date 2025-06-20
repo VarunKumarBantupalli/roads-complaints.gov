@@ -6,8 +6,8 @@ const ComplaintResponse = require('../models/complaintResponse');
 router.get('/', async (req, res) => {
   try {
     const responses = await ComplaintResponse.find()
-      .populate('complaintId')      // Get original complaint details
-      .populate('officerId', 'name email'); // Only return officer name and email (customize if needed)
+      .populate('complaintId')  
+       .populate('officerId', 'name email district'); 
 
     res.status(200).json(responses);
   } catch (error) {

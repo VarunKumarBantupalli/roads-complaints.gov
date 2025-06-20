@@ -47,7 +47,7 @@ router.get('/district/:district', async (req, res) => {
 // This route is used to get all complaints
 router.get('/', async (req, res) => {
   try {
-    const complaints = await Complaint.find().populate('userId', 'name email');
+    const complaints = await Complaint.find().populate('userId', 'name email ');
     res.status(200).json(complaints);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch complaints', error: err });
@@ -79,7 +79,7 @@ router.post('/respond/:id', async (req, res) => {
     if (!complaint) {
       return res.status(404).json({ message: 'Complaint not found' });
     }
-
+ //if you want to add the username even after deleting the compliant , then we should send the username from here 
     const newResponse = new ComplaintResponse({
       complaintId,
       complaintImage: complaint.image,
