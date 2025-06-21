@@ -17,7 +17,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await axios.post('/api/auth/register', form);
+      await axios.post('https://ridewise.onrender.com/api/auth/register', form);
       alert('Registered successfully. Please login.');
       navigate('/login');
     } catch (err) {
