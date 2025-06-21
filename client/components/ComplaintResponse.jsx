@@ -32,7 +32,7 @@ const ComplaintResponse = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setImagePreview(URL.createObjectURL(file)); // Show image preview
+    setImagePreview(URL.createObjectURL(file));
 
     const formData = new FormData();
     formData.append('file', file);
@@ -82,30 +82,28 @@ const ComplaintResponse = () => {
     }
   };
 
-  if (!complaint) return <div>
-    <Loading />
-  </div>;
+  if (!complaint) return <Loading />;
 
   return (
-       <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-6 mb-10">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Complaint Details</h2>
+    <div className="max-w-3xl mx-auto p-6 mt-10 mb-12 bg-gradient-to-br from-[#f9fafb] to-[#edf2f7] rounded-3xl shadow-lg border border-gray-200">
+      <h2 className="text-3xl font-semibold text-gray-900 mb-6">Complaint Details</h2>
 
       <img
         src={complaint.image}
         alt="Complaint"
-        className="w-full h-64 object-cover rounded-xl mb-6 shadow-sm"
+        className="w-full h-64 object-cover rounded-2xl mb-6 border border-gray-300 shadow-sm"
       />
 
-      <p className="text-gray-700 mb-6">
-        <strong className="font-medium">Description:</strong> {complaint.description}
+      <p className="text-lg text-gray-800 mb-8 bg-white p-4 rounded-xl border border-gray-200 shadow-inner leading-relaxed">
+        <span className="font-semibold text-gray-700 block mb-1">Description:</span>
+        {complaint.description}
       </p>
 
-      <h2 className="text-xl font-semibold text-gray-800 mb-3">Attach Officer's Response</h2>
+      <h3 className="text-xl font-semibold text-gray-900 mb-4">Attach Officer's Response</h3>
 
-      {/* Upload Input */}
-      <label className="flex items-center gap-2 cursor-pointer text-blue-600 hover:text-blue-800 transition mb-4">
+      <label className="flex items-center gap-2 text-indigo-600 cursor-pointer hover:text-indigo-800 transition font-medium mb-5">
         <UploadCloud className="w-5 h-5" />
-        <span className="underline">Capture/Upload Image</span>
+        <span className="underline">Capture or Upload an Image</span>
         <input
           type="file"
           accept="image/*"
@@ -115,21 +113,20 @@ const ComplaintResponse = () => {
         />
       </label>
 
-      {/* Image Preview */}
       {imagePreview && (
         <div className="mb-6">
           <p className="text-sm text-gray-500 mb-2">Image Preview:</p>
           <img
             src={imagePreview}
             alt="Response Preview"
-            className="w-full max-h-80 object-cover rounded-lg border border-gray-200 shadow"
+            className="w-full max-h-80 object-cover rounded-xl border border-gray-300 shadow-md"
           />
         </div>
       )}
 
       <textarea
-        placeholder="Write response description here..."
-        className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none resize-none mb-6"
+        placeholder="Write your response here..."
+        className="w-full p-4 text-gray-800 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none mb-6 text-[15px] leading-relaxed"
         rows={5}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -137,7 +134,7 @@ const ComplaintResponse = () => {
       />
 
       <button
-        className="flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition duration-300 shadow-sm w-full sm:w-fit"
+        className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md transition-all duration-300"
         onClick={handleResponseSubmit}
       >
         <FileCheck className="w-5 h-5" />
