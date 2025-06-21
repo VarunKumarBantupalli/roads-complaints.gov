@@ -46,7 +46,7 @@ const Navbar = () => {
           {/* User Section */}
           {user ? (
             <>
-              <span className=" sm:inline text-lg text-yellow-500  ">
+              <span className="  text-lg text-yellow-500  ">
                 Hi, {user.name}
               </span>
               <button

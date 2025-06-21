@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png'; // used as background
+
 
 const Register = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
@@ -28,18 +28,18 @@ const Register = () => {
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
-      style={{ backgroundImage: `url(${logo})` }}
+      style={{ backgroundImage:  "url('https://cdn.thedecorjournalindia.com/wp-content/uploads/2022/03/Walking-Through-The-Amaravati-Government-Complex-Designed-By-Foster-Partners-2.jpg?strip=all&lossy=1&resize=1920%2C1079&ssl=1')" }}
     >
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black opacity-10 z-0"></div>
 
       {/* Heading */}
-      <div className="relative z-10 text-center text-white">
+      <div className="relative z-10 text-center text-slate-700">
         <h1 className="text-4xl m-10 font-bold">Create Your Account</h1>
       </div>
 
       {/* Form Container */}
-      <div className="relative z-10 bg-opacity-50 backdrop-blur-md border border-white p-10 rounded-lg shadow-2xl w-[90%] max-w-md">
+      <div className="relative z-10 bg-opacity-40 backdrop-blur-sm border border-white p-10 rounded-lg shadow-2xl w-[90%] max-w-md">
         <form onSubmit={handleSubmit} className="w-full">
           <label className="block text-white font-semibold mb-1">Full Name:</label>
           <input
@@ -76,7 +76,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-green-700 hover:bg-green-600 rounded-md text-white font-semibold transition"
+            className="w-full px-4 py-2 border-2 bg-transparent cursor-pointer hover:text-gray-400 rounded-md text-white font-semibold transition"
           >
             Register
           </button>
@@ -86,7 +86,7 @@ const Register = () => {
             <button
               type="button"
               onClick={() => navigate('/login')}
-              className="px-4 py-2 bg-white text-black rounded-md hover:bg-gray-200 transition"
+              className="px-4 py-2 bg-white hover:bg-black hover:text-white cursor-pointer text-black rounded-md transition"
             >
               Login
             </button>

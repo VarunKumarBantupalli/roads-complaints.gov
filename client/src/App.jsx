@@ -12,6 +12,7 @@ import Logout from '../components/Logout';
 import ComplaintResponse from '../components/ComplaintResponse';
 import ScrollToTop from '../components/ScrollToTop';
 import Responses from '../components/Responses';
+import Navbar from '../components/Navbar';
 
 // import AdminPanel from '../pages/AdminPanel';
 
@@ -21,6 +22,7 @@ import Responses from '../components/Responses';
 const App = () => {
   return (
     <Router>
+      
       <ScrollToTop/>
       <Routes>
         {/* Public Routes */}

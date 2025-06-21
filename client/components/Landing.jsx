@@ -21,7 +21,7 @@ const Landing = () => {
 
         <div className="flex space-x-4 sm:space-x-6">
           <Link to="/responses" className="flex items-center space-x-2">
-            <div className="bg-black hover:text-black  text-white px-4 py-2 rounded-2xl transition flex items-center justify-center">
+            <div className="bg-black hover:text-black hover:bg-white  text-white px-4 py-2 rounded-2xl transition flex items-center justify-center">
               <FileSearch className="h-5 w-5" />
               <span className="  ml-2">All Responses</span>
             </div>
@@ -29,7 +29,7 @@ const Landing = () => {
 
           {/* Raise Complaint */}
           <Link to= "/user-dashboard" className="flex items-center space-x-2">
-            <div className="bg-black hover:text-black  text-white px-4 py-2 rounded-2xl transition flex items-center justify-center">
+            <div className="bg-black hover:text-black hover:bg-white  text-white px-4 py-2 rounded-2xl transition flex items-center justify-center">
               <Megaphone className="h-5 w-5" />
               <span className="  ml-2">Raise Complaint</span>
             </div>

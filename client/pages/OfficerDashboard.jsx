@@ -49,7 +49,7 @@ const OfficerDashboard = () => {
 
   return (
  <>
-      <Navbar />
+      
       <Toaster position="top-right" reverseOrder={false} />
       <div className="p-4 min-h-screen bg-gradient-to-b from-[#f5f7fa] to-[#d9e2ec]">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
