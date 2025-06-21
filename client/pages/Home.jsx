@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Landing from '../components/Landing';
 import Navbar from '../components/Navbar';
-import Numbers from '../components/Numbers';
 import Marketing from '../components/Marketing';
 import Footer from '../components/Footer';
 import Camera from '../components/Camerabar';
+import Mission from '../components/Mission';
 
 
 
@@ -16,7 +16,7 @@ const Home = () => {
     <>
     <Navbar/>
     <Landing/>
-    <Numbers/>
+    <Mission />
     <Marketing/>
     <Camera/>
     <Footer/> 

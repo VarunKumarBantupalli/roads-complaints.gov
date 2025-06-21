@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { LogOut, LogIn, Megaphone, FileSearch } from 'lucide-react';
+
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
-  // Replace with actual user state logic
-  const user = JSON.parse(localStorage.getItem("user")); // or useContext/auth state
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -15,31 +14,46 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#1e293b] text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-black text-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-12 sm:h-16 md:h-20">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-bold tracking-tight text-white hover:text-blue-400 transition">
-          Ridewise
+        <Link to="/" className="flex items-center h-full">
+          <img
+            src={logo}
+            alt="logo"
+            className="h-[70%] w-auto object-contain rounded-full"
+          />
         </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6 items-center">
-          <Link to="/responses" className="hover:text-blue-400 transition">All Responses</Link>
+        {/* Menu Items */}
+        <div className="flex items-center space-x-4 sm:space-x-6">
+          {/* All Responses */}
+          <Link to="/responses" className="flex items-center space-x-2">
+            <div className="hover:bg-white hover:text-black  text-white px-4 py-2 rounded-2xl transition flex items-center justify-center">
+              <FileSearch className="h-5 w-5" />
+              <span className="hidden md:inline ml-2">All Responses</span>
+            </div>
+          </Link>
 
-          {user ? (
-            <Link to="/complaints" className="hover:text-blue-400 transition">Raise Complaint</Link>
-          ) : (
-            <Link to="/login" className="hover:text-blue-400 transition">Raise Complaint</Link>
-          )}
+          {/* Raise Complaint */}
+          <Link to={user ? "/user-dashboard" : "/login"} className="flex items-center space-x-2">
+            <div className="hover:bg-white hover:text-black  text-white px-4 py-2 rounded-2xl transition flex items-center justify-center">
+              <Megaphone className="h-5 w-5" />
+              <span className="hidden md:inline ml-2">Raise Complaint</span>
+            </div>
+          </Link>
 
+          {/* User Section */}
           {user ? (
             <>
-              <span className="text-sm text-gray-300">Hi, {user.name}</span>
+              <span className=" sm:inline text-lg text-yellow-500  ">
+                Hi, {user.name}
+              </span>
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded transition"
+                className="hover:bg-white hover:text-black  text-white px-4 py-1 rounded transition-shadow"
               >
-                Logout
+                <LogOut />
               </button>
             </>
           ) : (
@@ -47,57 +61,11 @@ const Navbar = () => {
               to="/login"
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded transition"
             >
-              Login
+              <LogIn />
             </Link>
           )}
-        </div>
-
-        {/* Mobile Menu Icon */}
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      {isOpen && (
-        <div className="md:hidden bg-[#1e293b] px-4 pb-4 space-y-3">
-          <Link to="/responses" className="block hover:text-blue-400" onClick={() => setIsOpen(false)}>
-            All Responses
-          </Link>
-          <Link
-            to={user ? "/complaints" : "/login"}
-            className="block hover:text-blue-400"
-            onClick={() => setIsOpen(false)}
-          >
-            Raise Complaint
-          </Link>
-
-          {user ? (
-            <>
-              <span className="block text-sm text-gray-300">Hi, {user.name}</span>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setIsOpen(false);
-                }}
-                className="w-full text-left text-red-400 hover:text-red-500"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link
-              to="/login"
-              className="block text-blue-400 hover:text-blue-500"
-              onClick={() => setIsOpen(false)}
-            >
-              Login
-            </Link>
-          )}
-        </div>
-      )}
     </nav>
   );
 };
